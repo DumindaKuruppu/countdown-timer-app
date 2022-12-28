@@ -12,14 +12,14 @@ class MainActivity : AppCompatActivity() {
     private var timerDuration: Long = 60000
     private var pauseOffset: Long = 0
 
-    private var binding : ActivityMainBinding? =  null
+    private var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        binding?.textView3?.text = (timerDuration/1000).toString()
+        binding?.textView3?.text = (timerDuration / 1000).toString()
 
         binding?.button?.setOnClickListener {
             startTimer(pauseOffset)
@@ -32,14 +32,12 @@ class MainActivity : AppCompatActivity() {
         binding?.button3?.setOnClickListener {
             resetTimer()
         }
-
-
     }
 
     private fun resetTimer() {
         if (countDownTimer != null) {
             countDownTimer!!.cancel()
-            binding?.textView3?.text = (timerDuration/1000).toString()
+            binding?.textView3?.text = (timerDuration / 1000).toString()
             countDownTimer = null
             pauseOffset = 0
         }
@@ -57,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         countDownTimer = object : CountDownTimer(timerDuration - pauseOffsetL, 1000) {
             override fun onTick(milisUntilFinished: Long) {
                 pauseOffset = timerDuration - milisUntilFinished
-                binding?.textView3?.text = (milisUntilFinished/1000).toString()
+                binding?.textView3?.text = (milisUntilFinished / 1000).toString()
             }
 
             override fun onFinish() {
@@ -65,7 +63,5 @@ class MainActivity : AppCompatActivity() {
             }
 
         }.start()
-
-
     }
 }
