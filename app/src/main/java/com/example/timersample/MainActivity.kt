@@ -3,6 +3,7 @@ package com.example.timersample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.widget.Toast
 import com.example.timersample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -36,14 +37,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetTimer() {
-        TODO("Not yet implemented")
+        if (countDownTimer != null) {
+            countDownTimer!!.cancel()
+            binding?.textView3?.text = (timerDuration/1000).toString()
+            countDownTimer = null
+            pauseOffset = 0
+        }
+
     }
 
     private fun pauseTimer() {
-        TODO("Not yet implemented")
+        if (countDownTimer != null) {
+            countDownTimer!!.cancel()
+        }
     }
 
-    private fun startTimer(pauseOffset: Long) {
+    private fun startTimer(pauseOffsetL: Long) {
+
+        countDownTimer = object : CountDownTimer(timerDuration - pauseOffsetL, 1000) {
+            override fun onTick(milisUntilFinished: Long) {
+                pauseOffset = timerDuration - milisUntilFinished
+                binding?.textView3?.text = (milisUntilFinished/1000).toString()
+            }
+
+            override fun onFinish() {
+                Toast.makeText(this@MainActivity, "Timer Finished", Toast.LENGTH_SHORT).show()
+            }
+
+        }.start()
+
 
     }
 }
